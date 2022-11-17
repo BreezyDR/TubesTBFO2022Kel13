@@ -1,0 +1,60 @@
+{
+    "terminal":
+    {
+        "keyword":
+        [
+            "break",
+            "const",
+            "case",
+            "catch",
+            "continue",
+            "default",
+            "delete",
+            "else",
+            "false",
+            "finally",
+            "for",
+            "function",
+            "if",
+            "let",
+            "null",
+            "return",
+            "switch",
+            "throw",
+            "try",
+            "true",
+            "var",
+            "while"
+        ]        
+    },
+
+    "grammar":{
+        "absolute_start":[
+            ["statement"]
+
+
+
+
+        ],
+        "statement":[
+            ["let lhs_statement = rhs_statement"]
+        ],
+        "lhs_statement":[
+            ["variable"]
+        ],
+        "rhs_statement":[
+            ["operation"]
+        ],
+        "operation":[
+            ["operation operator variable"],
+            ["variable"]
+        ],
+        "operator":[
+            ["+"],
+            ["-"],
+            ["="]
+        ]
+
+        
+    }
+}
