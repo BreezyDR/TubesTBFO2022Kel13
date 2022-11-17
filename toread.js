@@ -1,5 +1,6 @@
+const jeki = "pose"
 let mayo = 13
 
-if (true){
-    return false
+if ( true){
+    mayo =  mayo + 2
 }

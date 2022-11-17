@@ -1,7 +1,7 @@
 {
     "terminal":
     {
-        "keyword":
+        "keywords":
         [
             "break",
             "const",
@@ -25,36 +25,42 @@
             "true",
             "var",
             "while"
-        ]        
+        ],
+        "brackets":
+        {
+            "squared-brackets"  :    ["[", "]"],
+            "rounded-brackets"  :    ["(", ")"],
+            "curly-brackets"    :    ["{", "}"]
+        },
+        "operator":{
+            "math-ops":["+", "-"],
+            "assignment":["="]
+        }
     },
 
     "grammar":{
-        "absolute_start":[
-            ["statement"]
-
-
-
-
+        "operation":[
+            "operation + variable",
+            "variable + variable"
+        ],
+        "declaration":[
+            "let statement",
+            "const statement"
+        ],
+        "rhs":[
+            "operation"
+        ],
+        "lhs":[
+            "variable broken"
         ],
         "statement":[
-            ["let lhs_statement = rhs_statement"]
+            "lhs = rhs"
         ],
-        "lhs_statement":[
-            ["variable"]
-        ],
-        "rhs_statement":[
-            ["operation"]
-        ],
-        "operation":[
-            ["operation operator variable"],
-            ["variable"]
-        ],
-        "operator":[
-            ["+"],
-            ["-"],
-            ["="]
+        "absolute_start":[
+            "statement"
         ]
-
+        
+        
         
     }
 }
