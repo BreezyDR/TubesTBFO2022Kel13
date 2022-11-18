@@ -3,7 +3,7 @@ from src.file_reader import readFiles
 from src.utility import sanitizeString
 from src.Literal import Literal, isTerminal
 
-from src.grammar import keywords, brackets, arith_ops, logic_ops, ternary_ops, nullish_ops
+from src.grammar import keywords, brackets, arith_ops, logic_ops, ternary_ops, nullish_ops, assign_ops
                                     
 def parseText(text: list[str]) -> list[str]:
     # def isTerminal(val: str) -> bool:
@@ -25,7 +25,7 @@ def parseText(text: list[str]) -> list[str]:
         return sentence
 
     def parseOperators(sentence: str) -> str:
-        every_ops = arith_ops #| logic_ops | ternary_ops | nullish_ops # NOTE: watch for new operators to be added in the future!
+        every_ops = arith_ops | logic_ops | ternary_ops | nullish_ops | assign_ops # NOTE: watch for new operators to be added in the future!
         # print(every_ops)
 
         for i in every_ops :

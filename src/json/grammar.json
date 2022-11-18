@@ -50,9 +50,7 @@
             "ADD": "+",
             "SUB": "-",
             "MUL": "*",
-            "DIV": "/",
-            
-            "ASSIGN": "="
+            "DIV": "/"
         },
         "logic_operator":{
             "EQT": "===",
@@ -74,6 +72,10 @@
         },
         "nullish_operator":{
             "NULEQ": "??"
+        },
+        "assign_operator":{
+            "ASSIGN": "=",
+            "COMMA": ","
         }
     },
 

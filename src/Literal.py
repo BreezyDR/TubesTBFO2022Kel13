@@ -1,4 +1,4 @@
-from src.grammar import keywords, arith_ops, brackets, logic_ops, ternary_ops, nullish_ops
+from src.grammar import keywords, arith_ops, brackets, logic_ops, ternary_ops, nullish_ops, assign_ops
 
 class Literal(str):
     # NOTE:
@@ -40,6 +40,11 @@ def isTerminal(val: Literal) -> bool:
 
     # nullish_ops
     for i in nullish_ops:
+        if val == i:
+            return True
+
+    # assign_ops
+    for i in assign_ops:
         if val == i:
             return True
     
