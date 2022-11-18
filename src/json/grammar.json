@@ -36,31 +36,37 @@
             "RD_BRACKET_ED": ")"
         },
         "arith_operator":{
-            "ADD": "{",
-            "SUB": "-",
-            "MUL": "*",
-            "DIV": "/",
+            "IPOW": "**=",
+
             "POW": "**",
-            "MOD": "%",
+            
+            "IMOD": "%=",
             "IADD": "+=",
             "ISUB": "-=",
             "IMUL": "*=",
             "IDIV": "/=",
-            "IPOW": "**=",
-            "IMOD": "%=",
+            
+            "MOD": "%",
+            "ADD": "+",
+            "SUB": "-",
+            "MUL": "*",
+            "DIV": "/",
+            
             "ASSIGN": "="
         },
         "logic_operator":{
-            "EQ": "==",
             "EQT": "===",
-            "NEQ": "!=",
             "NEQT": "!==",
-            "GT": ">",
+
+            "EQ": "==",
+            "NEQ": "!=",
             "GE": ">=",
-            "LT": "<",
             "LE": "<=",
             "AND": "&&",
             "OR": "||",
+
+            "GT": ">",
+            "LT": "<",
             "NOT": "!"
         },
         "ternary_operator":{
@@ -71,8 +77,10 @@
         }
     },
 
+
+
     "grammar":{
-        
+
         
         
         
