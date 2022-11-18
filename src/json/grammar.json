@@ -2,63 +2,77 @@
     "terminal":
     {
         "keywords":
-        [
-            "break",
-            "const",
-            "case",
-            "catch",
-            "continue",
-            "default",
-            "delete",
-            "else",
-            "false",
-            "finally",
-            "for",
-            "function",
-            "if",
-            "let",
-            "null",
-            "return",
-            "switch",
-            "throw",
-            "try",
-            "true",
-            "var",
-            "while"
-        ],
+        {
+            "BREAK": "break",
+            "CONST": "const",
+            "CASE": "case",
+            "CATCH": "catch",
+            "CONTINUE": "continue",
+            "DEFAULT": "default",
+            "DELETE": "delete",
+            "ELSE": "else",
+            "FALSE": "false",
+            "FINALLY": "finally",
+            "FOR": "for",
+            "FUNCTION": "function",
+            "IF": "if",
+            "LET": "let",
+            "NULL": "null",
+            "RETURN": "return",
+            "SWITCH": "switch",
+            "THROW": "throw",
+            "TRY": "try",
+            "TRUE": "true",
+            "VAR": "var",
+            "WHILE": "while"
+        },
         "brackets":
         {
-            "squared-brackets"  :    ["[", "]"],
-            "rounded-brackets"  :    ["(", ")"],
-            "curly-brackets"    :    ["{", "}"]
+            "CLY_BRACKET_OP": "{",
+            "CLY_BRACKET_ED": "}",
+            "SQ_BRACKET_OP" : "[",
+            "SQ_BRACKET_ED": "]",
+            "RD_BRACKET_OP": "(",
+            "RD_BRACKET_ED": ")"
         },
-        "operator":{
-            "math-ops":["+", "-"],
-            "assignment":["="]
+        "arith_operator":{
+            "ADD": "{",
+            "SUB": "-",
+            "MUL": "*",
+            "DIV": "/",
+            "POW": "**",
+            "MOD": "%",
+            "IADD": "+=",
+            "ISUB": "-=",
+            "IMUL": "*=",
+            "IDIV": "/=",
+            "IPOW": "**=",
+            "IMOD": "%=",
+            "ASSIGN": "="
+        },
+        "logic_operator":{
+            "EQ": "==",
+            "EQT": "===",
+            "NEQ": "!=",
+            "NEQT": "!==",
+            "GT": ">",
+            "GE": ">=",
+            "LT": "<",
+            "LE": "<=",
+            "AND": "&&",
+            "OR": "||",
+            "NOT": "!"
+        },
+        "ternary_operator":{
+            "TEQ": "?"
+        },
+        "nullish_operator":{
+            "NULEQ": "??"
         }
     },
 
     "grammar":{
-        "operation":[
-            "operation + variable",
-            "variable + variable"
-        ],
-        "declaration":[
-            "let statement",
-            "const statement"
-        ],
-        "rhs":[
-            "operation"
-        ],
-        "lhs":[
-            "variable broken"
-        ],
-        "statement":[
-            "lhs = rhs"
-        ],
-        "absolute_start":[
-            "statement"
-        ]
+        
         
         
         
