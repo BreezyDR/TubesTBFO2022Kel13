@@ -32,7 +32,9 @@ def parseText(text: list[str]) -> list[str]:
             sentence = sentence.replace(every_ops[i], " " + i + " ")
 
         return sentence
+    
 
+    variable_pool = []
     # parseVariable should always be the last method called
     def parseVariable(sentence: str) -> str:
         sentence = sanitizeString(sentence) # TODO: sanitization should actually be put last
@@ -42,7 +44,12 @@ def parseText(text: list[str]) -> list[str]:
 
         for i in range(len(literal)):
             if not isTerminal(literal[i]) and literal[i] != '':
-                literal[i] = "variable"
+                if literal[i] not in variable_pool:
+                    variable_pool.append(literal[i])
+                
+                # TODO: numeric constant will still be marked as vairable
+                literal[i] = "variable_" + str(variable_pool.index(literal[i]))
+        
 
         return ' '.join(literal)
 
