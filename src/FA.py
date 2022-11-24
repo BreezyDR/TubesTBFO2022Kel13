@@ -1,4 +1,4 @@
-# from parser_symbol import *
+from grammar import *
 
 def isVariable(word: str) -> bool:
     isVar = True
@@ -24,12 +24,12 @@ def isArithOps(array_of_words: list[str], i : int) -> bool:
     # Memeriksa operasi aritmetika selain pre increment dan pre decreement
     if ((isVariable(arg1) or arg1.isdigit()) and (i+1 < len(array_of_words))):
         ops = array_of_words[i+1]
-        if (ops == '+' or ops == '-' or ops == '*' or ops == '**' or ops == '/' or ops == '%' and i+2 < len(array_of_words)):
+        if (ops == '++' or ops == '--' and isVariable(arg1)):
+            if (i+2 < len(array_of_words)):
+                isValid = False
+        elif ((ops in arith_ops) and (i+2 < len(array_of_words))):
             arg2 = array_of_words[i+2]
             if (not (isVariable(arg2) or arg2.isdigit())):
-                isValid = False
-        elif (ops == '++' or ops == '--' and isVariable(arg1)):
-            if (i+2 < len(array_of_words)):
                 isValid = False
         else:
             isValid = False
@@ -44,13 +44,37 @@ def isArithOps(array_of_words: list[str], i : int) -> bool:
 
     return isValid
 
-def isAssignOps() -> bool:
+def isAssignOps(array_of_words: list[str], i : int) -> bool:
     isValid = True
+    arg1 = array_of_words[i]
+    ops = array_of_words[i+1]
+    arg2 = array_of_words[i+2]
+
+    if (isVariable(arg1)):
+        if (ops in assign_ops):
+            if (not (isVariable(arg2) or arg2.isdigit() or isArithOps(array_of_words, i+2))):
+                isValid = False
+        else:
+            isValid = False
+    else:
+        isValid = False
 
     return isValid
 
-def isCompareOps() -> bool:
+def isCompareOps(array_of_words: list[str], i : int) -> bool:
     isValid = True
+    arg1 = array_of_words[i]
+    ops = array_of_words[i+1]
+    arg2 = array_of_words[i+2]    
+
+    if (isVariable(arg1) or isArithOps(array_of_words, i) or arg1.isdigit()):
+        if (ops in comparison_ops):
+            if (not (isVariable(arg2) or isArithOps(array_of_words, i+2) or arg1.isdigit())):
+                isValid = False
+        else:
+            isValid = False
+    else:
+        isValid = False
 
     return isValid
 
