@@ -1,4 +1,12 @@
-from grammar import *
+#from grammar import *
+
+arith_ops = ['+', '-', '*', '**', '/', '%', '++', '--']
+logic_ops = ['&&', '||', '!']
+ternary_ops = ["ternary_operator"]
+nullish_ops = ['??']
+assign_ops = ['=', '+=', '-=', '*=', '/=', '%=', ':']
+comparison_ops = ['==', '===', '!=', '!==', '>', '<', '>=', '<=']
+bitwise_ops = ['&', '|', '~', '^', '<<', '>>', '>>>']
 
 def isVariable(word: str) -> bool:
     isVar = True
@@ -67,9 +75,9 @@ def isCompareOps(array_of_words: list[str], i : int) -> bool:
     ops = array_of_words[i+1]
     arg2 = array_of_words[i+2]    
 
-    if (isVariable(arg1) or isArithOps(array_of_words, i) or arg1.isdigit()):
+    if (isVariable(arg1) or arg1.isdigit()):
         if (ops in comparison_ops):
-            if (not (isVariable(arg2) or isArithOps(array_of_words, i+2) or arg1.isdigit())):
+            if (not (isVariable(arg2) or isArithOps(array_of_words, i+2) or arg2.isdigit())):
                 isValid = False
         else:
             isValid = False
@@ -78,20 +86,60 @@ def isCompareOps(array_of_words: list[str], i : int) -> bool:
 
     return isValid
 
-def isLogicOps() -> bool:
+def isLogicOps(array_of_words: list[str], i : int) -> bool:
     isValid = True
+    arg1 = array_of_words[i]
+    ops = array_of_words[i+1]
+    arg2 = array_of_words[i+2] 
+
+    if (isVariable(arg1) or arg1.isdigit()):
+        if (ops in logic_ops):
+            if (not (isVariable(arg2) or arg2.isdigit())):
+                isValid = False
+        else:
+            isValid = False
+    else:
+        isValid = False
 
     return isValid
 
-def isConditionalOps() -> bool:
+def isConditionalOps(array_of_words: list[str], i : int) -> bool:
     isValid = True
+    ops1 = array_of_words[i]
+    arg1 = array_of_words[i+1]
+    ops2 = array_of_words[i+2]
+    arg2 = array_of_words[i+3]    
+
+    if (ops1 == '?'):
+        if (arg1.isdigit() or isVariable(arg1) or isString(arg1)):
+            if (ops2 == ':'):
+                if (not (arg2.isdigit() or isVariable(arg2) or isString(arg1))):
+                    isValid = False
+            else:
+                isValid = False
+        else:
+            isValid = False
+    else:
+        isValid = False
 
     return isValid
 
-def isTypeOps() -> bool:
+def isTypeOps(array_of_words: list[str], i : int) -> bool:
     isValid = True
+    ops = array_of_words[i]
+    arg = array_of_words[i+1]
+
+    if (ops == 'typeof'):
+        if (array_of_words[i+1] == ';'):
+            isValid = False
+    else:
+        isValid = False
 
     return isValid
 
-var_pool = ["a", "++", "b", "++"]
-print(isArithOps(var_pool, 0))
+def isString(arg: str) -> bool:
+    return (arg[0] == '"' and arg[len(arg)-1] == '"') or (arg[0] == "'" and arg[len(arg)-1] == "'")
+
+
+var_pool = ["s", "+", "1", "==", "2"]
+print(isCompareOps(var_pool, 0))
