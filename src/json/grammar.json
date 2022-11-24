@@ -36,35 +36,18 @@
             "RD_BRACKET_ED": ")"
         },
         "arith_operator":{
-            "IPOW": "**=",
-
             "POW": "**",
-            
-            "IMOD": "%=",
-            "IADD": "+=",
-            "ISUB": "-=",
-            "IMUL": "*=",
-            "IDIV": "/=",
-            
             "MOD": "%",
             "ADD": "+",
             "SUB": "-",
             "MUL": "*",
-            "DIV": "/"
+            "DIV": "/",
+            "INC": "++",
+            "DEC": "--"
         },
         "logic_operator":{
-            "EQT": "===",
-            "NEQT": "!==",
-
-            "EQ": "==",
-            "NEQ": "!=",
-            "GE": ">=",
-            "LE": "<=",
             "AND": "&&",
             "OR": "||",
-
-            "GT": ">",
-            "LT": "<",
             "NOT": "!"
         },
         "ternary_operator":{
@@ -75,7 +58,36 @@
         },
         "assign_operator":{
             "ASSIGN": "=",
+            "IMOD": "%=",
+            "IADD": "+=",
+            "ISUB": "-=",
+            "IPOW": "**=",
+            "IMUL": "*=",
+            "IDIV": "/=",
+            "SIZE": ":",
             "COMMA": ","
+        },
+        "comparison_operator":{
+            "EQT": "===",
+            "NEQT": "!==",
+            "EQ": "==",
+            "NEQ": "!=",
+            "GE": ">=",
+            "LE": "<=",
+            "GT": ">",
+            "LT": "<"
+        },
+        "bitwise_operator":{
+            "BITAND": "&",
+            "BITOR": "|",
+            "BITNOT": "~",
+            "XOR": "^",
+            "LSHFT": "<<",
+            "RSHFT": ">>",
+            "URSHFT": ">>>"
+        },
+        "typeof_operator":{
+            "TYPEOF": "typeof"
         }
     },
 
