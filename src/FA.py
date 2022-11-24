@@ -73,10 +73,10 @@ def isStringOps(array_of_words: list[str], i : int) -> bool:
     if ((isVariable(arg1) or isString(arg1)) and (ops != ';')):
         arg2 = array_of_words[i+2]
         if (ops == '+'):
-            if (not (isVariable(arg2) or isVariable(arg2))):
+            if (not (isVariable(arg2) or isString(arg2))):
                 isValid = False
         elif (ops == '+='):
-            if (not (isVariable(arg1) and (isVariable(arg2) or isVariable(arg2)))):
+            if (not (isVariable(arg1) and (isVariable(arg2) or isString(arg2)))):
                 isValid = False
         else:
             isValid = False
@@ -219,5 +219,5 @@ def isBoolean(arg: str) -> bool:
 def isArray(arg: str) -> bool:
     return (arg[0] == '[' and arg[len(arg)-1] == ']')
 
-var_pool = ["b", "=", '"true"', "==", "2"]
-print(isAssignOps(var_pool, 0))
+var_pool = ["a", "+=", '"wow"', "==", "2"]
+print(isStringOps(var_pool, 0))
