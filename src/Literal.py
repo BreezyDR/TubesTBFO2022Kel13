@@ -1,4 +1,4 @@
-from src.grammar import keywords, arith_ops, brackets, logic_ops, ternary_ops, nullish_ops, assign_ops
+from src.grammar import keywords, arith_ops, brackets, logic_ops, ternary_ops, nullish_ops, assign_ops, comparison_ops, bitwise_ops
 
 class Literal(str):
     # NOTE:
@@ -9,7 +9,7 @@ class Literal(str):
 
 # helper functions
 # decided that we dont really need it to be inside the Literal class
-def isLiteral(value: str) -> bool:
+def isLiteral(value: Literal) -> bool:
         return True
 
 def isTerminal(val: Literal) -> bool:
@@ -17,34 +17,15 @@ def isTerminal(val: Literal) -> bool:
     for i in keywords:
         if val == i:
             return True
-    
-    # arith_ops
-    for i in arith_ops:
-        if val == i:
-            return True
 
     # brackets
     for i in brackets:
         if val == i:
             return True
-
-    # logic_ops
-    for i in logic_ops:
-        if val == i:
-            return True
-
-    # ternary_ops
-    for i in ternary_ops:
-        if val == i:
-            return True
-
-    # nullish_ops
-    for i in nullish_ops:
-        if val == i:
-            return True
-
-    # assign_ops
-    for i in assign_ops:
+    
+    # operators
+    every_ops = arith_ops | logic_ops | ternary_ops | nullish_ops | assign_ops | comparison_ops | bitwise_ops  # NOTE: watch for new operators to be added in the future!
+    for i in every_ops:
         if val == i:
             return True
     

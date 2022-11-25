@@ -6,18 +6,17 @@ data = json.loads(readFiles("src/json/grammar.json", True))
 #       or in short, sort it by priority
 
 # DONT IMPORT THESE
-terminal = data["terminal"]
-grammar = data["grammar"]
-
+terminal    = data["terminal"] 
+grammar     = data["grammar"] 
 
 # IMPORT THESE INSTEAD
-keywords = terminal["keywords"]
-brackets = terminal["brackets"]
-arith_ops = terminal["arith_operator"]
-logic_ops = terminal["logic_operator"]
+keywords    = terminal["keywords"]
+brackets    = terminal["brackets"]
+arith_ops   = terminal["arith_operator"]
+logic_ops   = terminal["logic_operator"]
 ternary_ops = terminal["ternary_operator"]
 nullish_ops = terminal["nullish_operator"]
-assign_ops = terminal["assign_operator"]
+assign_ops  = terminal["assign_operator"]
 comparison_ops = terminal["comparison_operator"]
 bitwise_ops = terminal["bitwise_operator"]
 

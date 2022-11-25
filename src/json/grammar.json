@@ -37,13 +37,14 @@
         },
         "arith_operator":{
             "POW": "**",
+            "INC": "++",
+            "DEC": "--",
+
             "MOD": "%",
             "ADD": "+",
             "SUB": "-",
             "MUL": "*",
-            "DIV": "/",
-            "INC": "++",
-            "DEC": "--"
+            "DIV": "/"
         },
         "logic_operator":{
             "AND": "&&",
@@ -57,34 +58,40 @@
             "NULEQ": "??"
         },
         "assign_operator":{
-            "ASSIGN": "=",
+            "IPOW": "**=",
+            
             "IMOD": "%=",
             "IADD": "+=",
             "ISUB": "-=",
-            "IPOW": "**=",
             "IMUL": "*=",
             "IDIV": "/=",
+
+            "ASSIGN": "=",
             "SIZE": ":",
             "COMMA": ","
         },
         "comparison_operator":{
             "EQT": "===",
             "NEQT": "!==",
+
             "EQ": "==",
             "NEQ": "!=",
             "GE": ">=",
             "LE": "<=",
+
             "GT": ">",
             "LT": "<"
         },
         "bitwise_operator":{
+            "URSHFT": ">>>",
+
+            "LSHFT": "<<",
+            "RSHFT": ">>",
+
             "BITAND": "&",
             "BITOR": "|",
             "BITNOT": "~",
-            "XOR": "^",
-            "LSHFT": "<<",
-            "RSHFT": ">>",
-            "URSHFT": ">>>"
+            "XOR": "^"
         },
         "typeof_operator":{
             "TYPEOF": "typeof"
@@ -94,7 +101,14 @@
 
 
     "grammar":{
-
+        "START" : [
+            "START S",
+            "S START",
+            "S"
+        ],
+        "IF_BLOCK" : [
+            "IF RD_BRACKET_OP CONDITION RD_BRACKET_ED CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED"
+        ]
         
         
         
