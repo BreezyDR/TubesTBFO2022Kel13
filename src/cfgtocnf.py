@@ -1,3 +1,5 @@
+from utility import isTerminal, isVariable
+
 # File: cfgtocnf.py 
 # Mengkonversi CFG ke CNF
 
@@ -70,16 +72,16 @@ def ConvertCFGtoCNF(cfg):
                         keySymbol = newSymbol
                         ruleStorage.remove(ruleStorage[0])
                         symbolAmount += 1
-                else: 
-                    if keySymbol in productionAdditionA.keys():
-                        productionAdditionA[keySymbol] += [ruleStorage]
-                    else:
-                        productionAdditionA[keySymbol] = [ruleStorage]
-                    
-                    if key in productionRemovalA.keys():
-                        productionRemovalA[key] += [rule]
-                    else:
-                        productionRemovalA[key] = [rule]
+                    else: 
+                        if keySymbol in productionAdditionA.keys():
+                            productionAdditionA[keySymbol] += [ruleStorage]
+                        else:
+                            productionAdditionA[keySymbol] = [ruleStorage]
+                        
+                        if key in productionRemovalA.keys():
+                            productionRemovalA[key] += [rule]
+                        else:
+                            productionRemovalA[key] = [rule]
         
         for a, b in productionAdditionA.items():
             if a in cfg.keys():
