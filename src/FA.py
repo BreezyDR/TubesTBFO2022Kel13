@@ -1,4 +1,4 @@
-#from grammar import *
+#from src.grammar import *
 
 arith_ops = ['+', '-', '*', '**', '/', '%', '++', '--']
 logic_ops = ['&&', '||', '!']
@@ -34,6 +34,7 @@ def checkVarOps(array_of_words: list[str]) -> bool:
             if (op == True):
                 valid = False
             else:
+                op = True
                 i = i + 2
         elif (isArithOps(array_of_words, i) or isStringOps(array_of_words, i) or isBitOps(array_of_words, i)):
             firstVar = False
@@ -46,6 +47,7 @@ def checkVarOps(array_of_words: list[str]) -> bool:
         elif (isVariable(array_of_words[i]) and icdcop):
             valid = False
         elif (isCompareOps(array_of_words, i, icdcop) or isLogicOps(array_of_words, i, icdcop) or isCompareOps(array_of_words, i, notop) or isLogicOps(array_of_words, i, notop) or isCompareOps(array_of_words, i, negop) or isLogicOps(array_of_words, i, negop)):
+            firstVar = False
             op = True
             if (icdcop or negop or notop):
                 i = i + 1
@@ -57,9 +59,11 @@ def checkVarOps(array_of_words: list[str]) -> bool:
             if (not (isConditionalOps(array_of_words, i+1))):
                 valid = False
             else:
+                firstVar = False
                 op = True
                 i = i + 3
         elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit()) and (firstVar or op) and not icdcop):
+            firstVar = False
             op = False
             i = i + 1
         elif (isVariable(array_of_words[i]) and not firstVar and not op):
@@ -204,7 +208,9 @@ def isCompareOps(array_of_words: list[str], i : int, displacement: bool) -> bool
             arg2 = array_of_words[i+2]
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
                 isValid = False
-    elif displacement:
+        else:
+            isValid = False
+    elif (displacement):
         if (arg1 in comparison_ops):
             arg2 = array_of_words[i+1]
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
@@ -318,6 +324,6 @@ def isArray(arg: str) -> bool:
 def isNull(arg: str) -> bool:
     return (arg == 'null')
 
-# var_pool = ['a', '+=', '2', ';', '3', ';']
-# # var_pool = ['jeki', '=', '"pos%e"', '+', '"sadkan"', ';']
-# print(checkVarOps(var_pool))
+var_pool = ['c', 'c', '1', ';', '3', ';']
+# var_pool = ['jeki', '=', '"pos%e"', '+', '"sadkan"', ';']
+print(checkVarOps(var_pool))
