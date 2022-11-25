@@ -1,4 +1,4 @@
-from utility import isTerminal, isVariable
+from utility import isTerminal, isAVariable
 
 # File: cfgtocnf.py 
 # Mengkonversi CFG ke CNF
@@ -34,7 +34,7 @@ def ConvertCFGtoCNF(cfg):
         unitProductions = {}
         for key, value in cfg.items():
             for rule in value:
-                if (isVariable(rule[0]) and len(rule) == 1):
+                if (isAVariable(rule[0]) and len(rule) == 1):
                     if (key not in unitProductions.keys()):
                         unitProductions[key] = [[rule[0]]]
                     else:

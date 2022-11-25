@@ -15,5 +15,5 @@ def isTerminal(string):
     terminal_array = [] # Nanti isi sama daftar string terminal
     return string in terminal_array
 
-def isVariable(string):
+def isAVariable(string):
     return not isTerminal(string)
