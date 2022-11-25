@@ -1,4 +1,4 @@
-from utility import isATerminal, isAVariable
+from Literal import isTerminal
 
 # File: cfgtocnf.py 
 # Mengkonversi CFG ke CNF
@@ -34,7 +34,7 @@ def ConvertCFGtoCNF(cfg):
         unitProductions = {}
         for key, value in cfg.items():
             for rule in value:
-                if (isAVariable(rule[0]) and len(rule) == 1):
+                if (not isTerminal(rule[0]) and len(rule) == 1):
                     if (key not in unitProductions.keys()):
                         unitProductions[key] = [[rule[0]]]
                     else:
@@ -95,7 +95,7 @@ def ConvertCFGtoCNF(cfg):
         for key, value in cfg.items():
             for rule in value:
                 if len(rule) == 2:
-                    if isATerminal(rule[0]) and isATerminal(rule[1]):
+                    if isTerminal(rule[0]) and isTerminal(rule[1]):
                         new_Y = "Y%d" % (p)
                         new_Z = "Z%d" % (q)
                         if key in productionAdditionB.keys():
@@ -111,7 +111,7 @@ def ConvertCFGtoCNF(cfg):
                         p += 1
                         q += 1
 
-                    elif isATerminal(rule[1]):
+                    elif isTerminal(rule[1]):
                         new_Z = "Z%d" % (q)
                         if key in productionAdditionB.keys():
                             productionAdditionB[key] += [[rule[0], new_Z]]
@@ -124,7 +124,7 @@ def ConvertCFGtoCNF(cfg):
                             productionRemovalB[key] = [rule]
                         q += 1
                     
-                    elif isATerminal(rule[0]):
+                    elif isTerminal(rule[0]):
                         new_Y = "Y%d" % (p)
                         if key in productionAdditionB.keys():
                             productionAdditionB[key] += [[new_Y, rule[1]]]
