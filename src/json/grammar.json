@@ -67,7 +67,7 @@
             "IDIV": "/=",
 
             "ASSIGN": "=",
-            "SIZE": ":",
+            "COLON": ":",
             "COMMA": ","
         },
         "comparison_operator":{
@@ -101,14 +101,57 @@
 
 
     "grammar":{
-        "START" : [
-            "START S",
-            "S START",
-            "S"
+        "ABSOLUTE_START" : [
+            "START"
+        ],
+        "START": [
+            "ANY_BLOCK START",
+            "IF_BLOCK",
+            "FUNCTION_BLOCK",
+            "FOR_BLOCK",
+            "WHILE_BLOCK",
+            "SENTENCE"
+        ],
+        "ANY_BLOCK" : [
+            "IF_BLOCK",
+            "FUNCTION_BLOCK",
+            "FOR_BLOCK",
+            "WHILE_BLOCK",
+            "SENTENCE"
+        ],
+        "LOGIC_STMT": [
+            "TRUE",
+            "FALSE",
+            "ID COMPARISON_OPS LOGIC_STMT",
+            "ID COMPARISON_OPS ID",
+            "LOGIC_STMT LOGIC_OPS LOGIC_STMT"
+        ],
+        "LOGIC_EXPR" : [
+            "RD_BRACKET_OP LOGIC_STMT RD_BRACKET_ED",
+            "RD_BRACKET_OP LOGIC_EXPR RD_BRACKET_ED"
         ],
         "IF_BLOCK" : [
-            "IF RD_BRACKET_OP CONDITION RD_BRACKET_ED CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED"
+            "IF LOGIC_EXPR IF_EXECUTION"
+        ],
+        "ELSE_BLOCK" : [
+            "ELSE IF_BLOCK"
+        ],
+        "IF_EXECUTION": [
+            "EXPR",
+            "IF_EXECUTION EXPR",
+            "IF_BLOCK",
+            "CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED"
+        ],
+        "EXPR" : [
+            "ID ASSIGN_OPS ID",
+            "ID ASSIGN_OPS EXPR",
+            "ID ASSIGN ARITH_EXPR"
+        ],
+        "ARITH_EXPR" : [
+            "ID ARITH_OPS ID",
+            "ID ARITH_OPS ARITH_EXPR"   
         ]
+
         
         
         
