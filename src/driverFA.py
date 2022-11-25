@@ -1,4 +1,9 @@
 from FA import *
 
-var_pool = ['a', '=', '1', '+', '1', ';']
-print(checkVarOps(var_pool))
+var_pool = ['word', '=', '"moe"', ';', 'word', '+=', '"moe kyun"', ';']
+#print(checkVarOps(var_pool))
+
+if (checkVarOps(var_pool)):
+    print("Accepted")
+else:
+    print("Syntax Error")

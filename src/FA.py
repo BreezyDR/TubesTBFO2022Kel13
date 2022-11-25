@@ -11,6 +11,7 @@ def checkVarOps(array_of_words: list[str]) -> bool:
     # KAMUS LOKAL
     valid: bool
     firstVar: bool
+    prevVar: bool
     op: bool
     icdcop: bool
     negop: bool
@@ -21,6 +22,7 @@ def checkVarOps(array_of_words: list[str]) -> bool:
     # ALGORITMA
     valid = True
     firstVar = True
+    prevVar = False
     op = False
     icdcop = False
     negop = False
@@ -29,14 +31,14 @@ def checkVarOps(array_of_words: list[str]) -> bool:
     length = len(array_of_words)-1
 
     while (i < length and valid):
-        if (isAssignOps(array_of_words, i)):
+        if (isAssignOps(array_of_words, i) and not prevVar):
             firstVar = False
             if (op == True):
                 valid = False
             else:
                 op = True
                 i = i + 2
-        elif (isArithOps(array_of_words, i) or isStringOps(array_of_words, i) or isBitOps(array_of_words, i)):
+        elif ((isArithOps(array_of_words, i) or isStringOps(array_of_words, i) or isBitOps(array_of_words, i)) and not prevVar):
             firstVar = False
             op = True
             if (array_of_words[i] == '++' or  array_of_words[i] == '--' or array_of_words[i+1] == '++' or  array_of_words[i+1] == '--'):
@@ -44,32 +46,37 @@ def checkVarOps(array_of_words: list[str]) -> bool:
             elif (array_of_words[i] == '~'):
                 negop = True
             i = i + 2
-        elif (isVariable(array_of_words[i]) and icdcop):
+        elif (isVariable(array_of_words[i]) and (icdcop or notop or negop)):
             valid = False
-        elif (isCompareOps(array_of_words, i, icdcop) or isLogicOps(array_of_words, i, icdcop) or isCompareOps(array_of_words, i, notop) or isLogicOps(array_of_words, i, notop) or isCompareOps(array_of_words, i, negop) or isLogicOps(array_of_words, i, negop)):
+        elif ((isCompareOps(array_of_words, i, icdcop) or isLogicOps(array_of_words, i, icdcop) or isCompareOps(array_of_words, i, notop) or isLogicOps(array_of_words, i, notop) or isCompareOps(array_of_words, i, negop) or isLogicOps(array_of_words, i, negop)) and not prevVar):
             firstVar = False
             op = True
             if (icdcop or negop or notop):
                 i = i + 1
+                icdcop = False
+                negop = False
+                notop = False
             else:
                 if (array_of_words[i] == '!'):
                     notop = True
                 i = i + 2
-        elif (array_of_words[i+1] == '?'):
+        elif (array_of_words[i+1] == '?' and not prevVar):
             if (not (isConditionalOps(array_of_words, i+1))):
                 valid = False
             else:
                 firstVar = False
                 op = True
                 i = i + 3
-        elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit()) and (firstVar or op) and not icdcop and not notop and not negop):
+        elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit() or isString(array_of_words[i]) or isNull(array_of_words[i]) or isArray(array_of_words[i])) and (firstVar or op) and not icdcop and not notop and not negop):
             firstVar = False
+            prevVar = True
             op = False
             i = i + 1
         elif (isVariable(array_of_words[i]) and not firstVar and not op):
             valid = False
         elif (array_of_words[i] == ';'):
             firstVar = True
+            prevVar = False
             op = False
             icdcop = False
             negop = False
