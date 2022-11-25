@@ -1,4 +1,4 @@
-from Literal import isTerminal
+from src.Literal import isTerminal
 
 # File: cfgtocnf.py 
 # Mengkonversi CFG ke CNF
