@@ -11,9 +11,9 @@ def sanitizeString(str: str) -> str:
 def sanitizeList(list: list[str]):
     return [(i).strip() for i in list if (i).strip() != '']
 
-def isTerminal(string):
+def isATerminal(string):
     terminal_array = [] # Nanti isi sama daftar string terminal
     return string in terminal_array
 
 def isAVariable(string):
-    return not isTerminal(string)
+    return not isATerminal(string)
