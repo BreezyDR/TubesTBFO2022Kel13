@@ -119,12 +119,9 @@
             "WHILE_BLOCK",
             "SENTENCE"
         ],
-        "LOGIC_STMT": [
-            "TRUE",
-            "FALSE",
-            "ID COMPARISON_OPS LOGIC_STMT",
-            "ID COMPARISON_OPS ID",
-            "LOGIC_STMT LOGIC_OPS LOGIC_STMT"
+        "SENTENCE" : [
+            "IF_BLOCK",
+            "EXPR"
         ],
         "LOGIC_EXPR" : [
             "RD_BRACKET_OP LOGIC_STMT RD_BRACKET_ED",
@@ -137,19 +134,72 @@
             "ELSE IF_BLOCK"
         ],
         "IF_EXECUTION": [
+            "CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED",
+            "CLY_BRACKET_OP IF_SENTENCE CLY_BRACKET_ED"
+        ],
+        "IF_SENTENCE" : [
             "EXPR",
-            "IF_EXECUTION EXPR",
-            "IF_BLOCK",
-            "CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED"
+            "EXPR IF_SENTENCE ",
+            "IF_BLOCK"
         ],
         "EXPR" : [
+            "ID ID",
             "ID ASSIGN_OPS ID",
-            "ID ASSIGN_OPS EXPR",
-            "ID ASSIGN ARITH_EXPR"
+            "ID ASSIGN_OPS ARITH_STMT",
+            "ID ASSIGN_OPS LOGIC_STMT",
+            "ID ASSIGN_OPS LOGIC_EXPR"
         ],
-        "ARITH_EXPR" : [
+        "ARITH_STMT" : [
             "ID ARITH_OPS ID",
-            "ID ARITH_OPS ARITH_EXPR"   
+            "ID ARITH_OPS ARITH_STMT"   
+        ],
+        "LOGIC_STMT": [
+            "TRUE",
+            "FALSE",
+            "ID COMPARISON_OPS LOGIC_STMT",
+            "ID COMPARISON_OPS ID",
+            "LOGIC_STMT LOGIC_OPS LOGIC_STMT"
+        ],
+        "ARITH_OPS" : [
+            "POW",
+            "INC",
+            "DEC",
+
+            "MOD",
+            "ADD",
+            "SUB",
+            "MUL",
+            "DIV"
+        ],
+        "LOGIC_OPS" : [
+            "AND",
+            "OR",
+            "NOT"
+        ],
+        "ASSIGN_OPS" : [
+            "IPOW",
+            
+            "IMOD",
+            "IADD",
+            "ISUB",
+            "IMUL",
+            "IDIV",
+
+            "ASSIGN",
+            "COLON",
+            "COMMA"
+        ],
+        "COMPARISON_OPS" : [
+            "EQT",
+            "NEQT",
+
+            "EQ",
+            "NEQ",
+            "GE",
+            "LE",
+
+            "GT",
+            "LT"
         ]
 
         

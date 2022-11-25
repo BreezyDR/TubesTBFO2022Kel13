@@ -8,7 +8,7 @@ def cyk(cnf: dict[str,list[list]], read_input: str) -> bool:
     i: int
     rule_length: int
     valid: bool
-
+    # print(read_input, 'asndadnjasdn')
     # ALGORITMA
     list_of_words = read_input.split(" ")
     n = len(list_of_words)
