@@ -20,4 +20,9 @@ assign_ops  = terminal["assign_operator"]
 comparison_ops = terminal["comparison_operator"]
 bitwise_ops = terminal["bitwise_operator"]
 
+CFG_GRAMMAR = {}
+
+for i in grammar:
+    CFG_GRAMMAR[i] = [[j] for j in grammar[i]]
+
 
