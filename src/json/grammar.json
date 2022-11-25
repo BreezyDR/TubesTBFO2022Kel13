@@ -95,10 +95,11 @@
         },
         "typeof_operator":{
             "TYPEOF": "typeof"
+        },
+        "line_termination" : {
+            "ENDL" : ";"
         }
     },
-
-
 
     "grammar":{
         "ABSOLUTE_START" : [
@@ -111,39 +112,73 @@
             "FOR_BLOCK",
             "WHILE_BLOCK",
             "SENTENCE"
+            
         ],
         "ANY_BLOCK" : [
             "IF_BLOCK",
             "FUNCTION_BLOCK",
             "FOR_BLOCK",
             "WHILE_BLOCK",
-            "SENTENCE"
+            "SENTENCE",
+            "BREAK",
+            "STMT"
+        ],
+        "FUNCTION_BLOCK" : [
+            "FUNCTION ID RD_BRACKET_OP FUNCTION_PARAM RD_BRACKET_ED FUNCTION_EXECUTION"
+        ],
+        "FUNCTION_PARAM" : [
+            "ID",
+            "ID COMMA FUNCTION FUNCTION_PARAM"
+        ],
+        "FUNCTION_EXECUTION" : [
+            "CLY_BRACKET_OP ANY_BLOCK RETURN CLY_BRACKET_ED",
+            "CLY_BRACKET_OP FUNCTION_EXECUTION CLY_BRACKET_ED"
+        ],
+        "FOR_BLOCK": [
+            "FOR LOOP_EXPR FOR_EXECUTION"
+        ],
+        "FOR_EXECUTION" : [
+            "CLY_BRACKET_OP ANY_BLOCK CLY_BRACKET_ED",
+            "CLY_BRACKET_OP FOR_EXECUTION CLY_BRACKET_ED"
+        ],
+        "LOOP_EXPR" : [
+            "RD_BRACKET_OP LET ID ASSIGN_OPS ID ENDL ID COMPARISON_OPS ID ENDL ID INC RD_BRACKET_ED",
+            "RD_BRACKET_OP LOOP_EXPR RD_BRACKET_ED"
         ],
         "SENTENCE" : [
-            "IF_BLOCK",
-            "EXPR"
+            "STMT",
+            "EXPR",
+            "ID"
+        ],
+        "STMT":[
+            "CONST ID ASSIGN_OPS ID ENDL"
         ],
         "LOGIC_EXPR" : [
             "RD_BRACKET_OP LOGIC_STMT RD_BRACKET_ED",
             "RD_BRACKET_OP LOGIC_EXPR RD_BRACKET_ED"
         ],
         "IF_BLOCK" : [
+            "IF LOGIC_EXPR EXPR",
             "IF LOGIC_EXPR IF_EXECUTION"
         ],
         "ELSE_BLOCK" : [
             "ELSE IF_BLOCK"
         ],
         "IF_EXECUTION": [
+            "CLY_BRACKET_OP STMT CLY_BRACKET_ED",
+            "CLY_BRACKET_OP ANY_BLOCK CLY_BRACKET_ED",
+            "CLY_BRACKET_OP CLY_BRACKET_ED",
             "CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED",
-            "CLY_BRACKET_OP IF_SENTENCE CLY_BRACKET_ED"
+            "CLY_BRACKET_OP SENTENCE CLY_BRACKET_ED"
         ],
-        "IF_SENTENCE" : [
-            "EXPR",
-            "EXPR IF_SENTENCE ",
-            "IF_BLOCK"
+        "WHILE_BLOCK":[
+            "WHILE  LOGIC_EXPR WHILE_EXECUTION"
+        ],
+        "WHILE_EXECUTION" : [
+            "CLY_BRACKET_OP WHILE_EXECUTION CLY_BRACKET_ED",
+            "CLY_BRACKET_OP ANY_BLOCK CLY_BRACKET_ED"
         ],
         "EXPR" : [
-            "ID ID",
             "ID ASSIGN_OPS ID",
             "ID ASSIGN_OPS ARITH_STMT",
             "ID ASSIGN_OPS LOGIC_STMT",

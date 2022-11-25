@@ -28,7 +28,7 @@ def cyk(cnf: dict[str,list[list]], read_input: str) -> bool:
                         rule_length = len(rule)
                         if ((rule_length == 2) and (rule[0] in Table[r][i]) and (rule[1] in Table[i+1][c])):
                             Table[r][c].add(head)
-    
+    # print(Table[0][n-1])
     if (len(Table[0][n-1]) == 0):
         valid = False
     else:

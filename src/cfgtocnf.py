@@ -4,8 +4,11 @@ from src.Literal import isTerminal
 # Mengkonversi CFG ke CNF
 
 def ConvertCFGtoCNF(cfg):
+    # print('asdasd', cfg)
     head = list(cfg.keys())
     body = list(cfg.values())
+    # print(head)
+    # print('asd', body)
     startSymbol = head[0]
     startSymbolInRule = False
     isUnitInRule = True
@@ -34,6 +37,7 @@ def ConvertCFGtoCNF(cfg):
         unitProductions = {}
         for key, value in cfg.items():
             for rule in value:
+                # print(rule[0], not isTerminal(rule[0]))
                 if (not isTerminal(rule[0]) and len(rule) == 1):
                     if (key not in unitProductions.keys()):
                         unitProductions[key] = [[rule[0]]]

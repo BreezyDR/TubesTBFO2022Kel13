@@ -1,11 +1,19 @@
 #from src.grammar import *
 
-arith_ops = ['+', '-', '*', '**', '/', '%', '++', '--']
-logic_ops = ['&&', '||', '!']
-nullish_ops = ['??']
-assign_ops = ['=', '+=', '-=', '*=', '/=', '%=', ':']
-comparison_ops = ['==', '===', '!=', '!==', '>', '<', '>=', '<=']
-bitwise_ops = ['&', '|', '~', '^', '<<', '>>', '>>>']
+# arith_ops = ['+', '-', '*', '**', '/', '%', '++', '--']
+# logic_ops = ['&&', '||', '!']
+# nullish_ops = ['??']
+# assign_ops = ['=', '+=', '-=', '*=', '/=', '%=', ':']
+# comparison_ops = ['==', '===', '!=', '!==', '>', '<', '>=', '<=']
+# bitwise_ops = ['&', '|', '~', '^', '<<', '>>', '>>>']
+from src.grammar import arith_ops, logic_ops, nullish_ops, assign_ops, comparison_ops, bitwise_ops
+
+arith_ops = list(arith_ops.values())
+logic_ops = list(logic_ops.values())
+nullish_ops = list(nullish_ops.values())
+assign_ops = list(assign_ops.values())
+comparison_ops = list(comparison_ops.values())
+bitwise_ops = list(bitwise_ops.values())
 
 def checkVarOps(array_of_words: list[str]) -> bool:
     # KAMUS LOKAL

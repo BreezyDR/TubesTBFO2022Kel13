@@ -1,4 +1,4 @@
-from src.grammar import keywords, arith_ops, brackets, logic_ops, ternary_ops, nullish_ops, assign_ops, comparison_ops, bitwise_ops
+from src.grammar import keywords, arith_ops, brackets, logic_ops, ternary_ops, nullish_ops, assign_ops, comparison_ops, bitwise_ops, line_termination
 
 class Literal(str):
     # NOTE:
@@ -28,9 +28,14 @@ def isTerminal(val: Literal) -> bool:
     for i in every_ops:
         if val == i:
             return True
+        
+
+    for i in line_termination:
+        if val == i:
+            return True
     
     # dont parse newline
-    if val == '\n':
+    if val == '\n' or val == 'ID':
         return True
     
 
