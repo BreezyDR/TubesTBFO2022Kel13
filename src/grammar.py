@@ -23,6 +23,6 @@ bitwise_ops = terminal["bitwise_operator"]
 CFG_GRAMMAR = {}
 
 for i in grammar:
-    CFG_GRAMMAR[i] = [[j] for j in grammar[i]]
+    CFG_GRAMMAR[i] = [j.split(' ') for j in grammar[i]]
 
 
