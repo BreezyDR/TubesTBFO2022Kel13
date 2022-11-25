@@ -13,6 +13,8 @@ def checkVarOps(array_of_words: list[str]) -> bool:
     firstVar: bool
     op: bool
     icdcop: bool
+    negop: bool
+    notop: bool
     i: int
     length: int    
 
@@ -21,6 +23,8 @@ def checkVarOps(array_of_words: list[str]) -> bool:
     firstVar = True
     op = False
     icdcop = False
+    negop = False
+    notop = False
     i = 0
     length = len(array_of_words)-1
 
@@ -36,16 +40,20 @@ def checkVarOps(array_of_words: list[str]) -> bool:
             op = True
             if (array_of_words[i] == '++' or  array_of_words[i] == '--' or array_of_words[i+1] == '++' or  array_of_words[i+1] == '--'):
                 icdcop = True
+            elif (array_of_words[i] == '~'):
+                negop = True
             i = i + 2
         elif (isVariable(array_of_words[i]) and icdcop):
             valid = False
-        elif (isCompareOps(array_of_words, i, icdcop) or isLogicOps(array_of_words, i)):
+        elif (isCompareOps(array_of_words, i, icdcop) or isLogicOps(array_of_words, i, icdcop) or isCompareOps(array_of_words, i, notop) or isLogicOps(array_of_words, i, notop) or isCompareOps(array_of_words, i, negop) or isLogicOps(array_of_words, i, negop)):
             op = True
-            if (icdcop):
+            if (icdcop or negop or notop):
                 i = i + 1
             else:
+                if (array_of_words[i] == '!'):
+                    notop = True
                 i = i + 2
-        elif (array_of_words[i+1] == ':'):
+        elif (array_of_words[i+1] == '?'):
             if (not (isConditionalOps(array_of_words, i+1))):
                 valid = False
             else:
@@ -60,6 +68,8 @@ def checkVarOps(array_of_words: list[str]) -> bool:
             firstVar = True
             op = False
             icdcop = False
+            negop = False
+            notop = False
             i = i + 1
         else:
             valid = False
@@ -177,7 +187,7 @@ def isAssignOps(array_of_words: list[str], i : int) -> bool:
 
     return isValid
 
-def isCompareOps(array_of_words: list[str], i : int, prev_inc_dec: bool) -> bool:
+def isCompareOps(array_of_words: list[str], i : int, displacement: bool) -> bool:
     # KAMUS LOKAL
     isValid: bool
     arg1: str
@@ -194,7 +204,7 @@ def isCompareOps(array_of_words: list[str], i : int, prev_inc_dec: bool) -> bool
             arg2 = array_of_words[i+2]
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
                 isValid = False
-    elif (prev_inc_dec):
+    elif displacement:
         if (arg1 in comparison_ops):
             arg2 = array_of_words[i+1]
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
@@ -206,7 +216,7 @@ def isCompareOps(array_of_words: list[str], i : int, prev_inc_dec: bool) -> bool
 
     return isValid
 
-def isLogicOps(array_of_words: list[str], i : int) -> bool:
+def isLogicOps(array_of_words: list[str], i : int, displacement: bool) -> bool:
     # KAMUS LOKAL
     isValid: bool
     arg1: str
@@ -223,6 +233,13 @@ def isLogicOps(array_of_words: list[str], i : int) -> bool:
             arg2 = array_of_words[i+2]
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
                 isValid = False
+        else:
+            isValid = False
+    elif displacement:
+        if (arg1 in logic_ops):
+            arg2 = array_of_words[i+1]
+            if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
+                isValid = False            
         else:
             isValid = False
     elif (arg1 == '!'):
@@ -301,5 +318,6 @@ def isArray(arg: str) -> bool:
 def isNull(arg: str) -> bool:
     return (arg == 'null')
 
-var_pool = ['++', '==', 'a', '++', ';', 'a', ';']
-print(checkVarOps(var_pool))
+# var_pool = ['a', '+=', '2', ';', '3', ';']
+# # var_pool = ['jeki', '=', '"pos%e"', '+', '"sadkan"', ';']
+# print(checkVarOps(var_pool))
