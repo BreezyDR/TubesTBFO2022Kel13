@@ -62,7 +62,7 @@ def checkVarOps(array_of_words: list[str]) -> bool:
                 firstVar = False
                 op = True
                 i = i + 3
-        elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit()) and (firstVar or op) and not icdcop):
+        elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit()) and (firstVar or op) and not icdcop and not notop and not negop):
             firstVar = False
             op = False
             i = i + 1
@@ -323,7 +323,3 @@ def isArray(arg: str) -> bool:
 
 def isNull(arg: str) -> bool:
     return (arg == 'null')
-
-var_pool = ['c', 'c', '1', ';', '3', ';']
-# var_pool = ['jeki', '=', '"pos%e"', '+', '"sadkan"', ';']
-print(checkVarOps(var_pool))
