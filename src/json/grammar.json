@@ -119,9 +119,7 @@
             "FUNCTION_BLOCK",
             "FOR_BLOCK",
             "WHILE_BLOCK",
-            "SENTENCE",
-            "BREAK",
-            "STMT"
+            "SENTENCE"
         ],
         "FUNCTION_BLOCK" : [
             "FUNCTION ID RD_BRACKET_OP FUNCTION_PARAM RD_BRACKET_ED FUNCTION_EXECUTION"
@@ -146,12 +144,15 @@
             "RD_BRACKET_OP LOOP_EXPR RD_BRACKET_ED"
         ],
         "SENTENCE" : [
+            "SENTENCE SENTENCE",
             "STMT",
             "EXPR",
             "ID"
         ],
         "STMT":[
-            "CONST ID ASSIGN_OPS ID ENDL"
+            "STMT_KEYWORDS EXPR", 
+            "STMT_KEYWORDS EXPR ENDL", 
+            "STMT_KEYWORDS EXPR ENDL STMT"
         ],
         "LOGIC_EXPR" : [
             "RD_BRACKET_OP LOGIC_STMT RD_BRACKET_ED",
@@ -159,26 +160,52 @@
         ],
         "IF_BLOCK" : [
             "IF LOGIC_EXPR EXPR",
-            "IF LOGIC_EXPR IF_EXECUTION"
+            "IF LOGIC_EXPR IF_EXECUTION",
+            "IF_BLOCK ELSE_BLOCK"
         ],
         "ELSE_BLOCK" : [
-            "ELSE IF_BLOCK"
+            "ELSE IF_BLOCK",
+            "ELSE IF_EXECUTION"
         ],
         "IF_EXECUTION": [
-            "CLY_BRACKET_OP STMT CLY_BRACKET_ED",
-            "CLY_BRACKET_OP ANY_BLOCK CLY_BRACKET_ED",
             "CLY_BRACKET_OP CLY_BRACKET_ED",
-            "CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED",
-            "CLY_BRACKET_OP SENTENCE CLY_BRACKET_ED"
+            "CLY_BRACKET_OP SENTENCE CLY_BRACKET_ED",
+            "CLY_BRACKET_OP ANY_BLOCK CLY_BRACKET_ED",
+            "CLY_BRACKET_OP IF_EXECUTION CLY_BRACKET_ED"
         ],
         "WHILE_BLOCK":[
-            "WHILE  LOGIC_EXPR WHILE_EXECUTION"
+            "WHILE LOGIC_EXPR WHILE_EXECUTION"
         ],
         "WHILE_EXECUTION" : [
+            "CLY_BRACKET_OP CLY_BRACKET_ED",
+            "CLY_BRACKET_OP SENTENCE CLY_BRACKET_ED",
             "CLY_BRACKET_OP WHILE_EXECUTION CLY_BRACKET_ED",
             "CLY_BRACKET_OP ANY_BLOCK CLY_BRACKET_ED"
         ],
+        "SWITCH_BLOCK" : [
+            "SWITCH RD_BRACKET_OP SWITCH_EXPR RD_BRACKET_ED CLY_BRACKET_OP SWITCH_EXECUTION CLY_BRACKET_ED"
+        ],
+        "SWITCH_EXPR" : [
+            "EXPR",
+            "LOGIC_EXPR",
+            "ARITH_STMT"
+        ],
+        "SWITCH_EXECUTION": [
+            "CASE_BLOCK SWITCH_EXECUTION",
+            "CASE_BLOCK",
+            "DEFAULT_BLOCK"
+        ],
+        "CASE_BLOCK" : [
+            "CASE ID COLON CASE_EXECUTION",
+            "CASE EXPR COLON CASE_EXECUTION"
+        ],
+        "CASE_EXECUTION":[
+            "EXPR CASE_EXECUTION",
+            "BREAK"
+        ],
         "EXPR" : [
+            "EXPR ENDL",
+            "EXPR COMMA EXPR",
             "ID ASSIGN_OPS ID",
             "ID ASSIGN_OPS ARITH_STMT",
             "ID ASSIGN_OPS LOGIC_STMT",
@@ -235,6 +262,11 @@
 
             "GT",
             "LT"
+        ],
+        "STMT_KEYWORDS" : [
+            "LET",
+            "CONST",
+            "VAR"
         ]
 
         
