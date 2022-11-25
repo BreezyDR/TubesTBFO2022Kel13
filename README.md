@@ -1,5 +1,8 @@
 # TubesTBFO2022Kel13
-Kel. 13 GaLas
+Kel. 13 GaLas <br />
+- Muhammad Equillibrie Fajria/13521047
+- Muhammad Farrel Danendra Rachim/13521048
+- Fakih Anugerah Pratama/13521091
 
 ## How to Run the Program
 ```
