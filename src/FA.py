@@ -74,7 +74,7 @@ def checkVarOps(array_of_words: list[str]) -> bool:
             else:
                 firstVar = False
                 op = True
-                i = i + 3
+                i = i + 4
         elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit() or isString(array_of_words[i]) or isNull(array_of_words[i]) or isArray(array_of_words[i])) and (firstVar or op) and not icdcop and not notop and not negop):
             firstVar = False
             prevVar = True
