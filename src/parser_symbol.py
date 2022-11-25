@@ -4,9 +4,9 @@ from src.file_reader import readFiles
 from src.utility import sanitizeString
 from src.Literal import Literal, isTerminal
 
-from src.grammar import keywords, brackets, arith_ops, logic_ops, ternary_ops, nullish_ops, assign_ops, comparison_ops, bitwise_ops
+from src.grammar import keywords, brackets, arith_ops, logic_ops, ternary_ops, nullish_ops, assign_ops, comparison_ops, bitwise_ops, line_termination
                                     
-def parseText(text: list[str]) -> tuple[list[str], list[Literal]]:
+def parseText(text: list[str], debug_mode = False) -> tuple[list[str], list[Literal]]:
     variable_pool = []
     in_a_comment = False
 
@@ -34,6 +34,15 @@ def parseText(text: list[str]) -> tuple[list[str], list[Literal]]:
     #         if sentence.find("*/") != -1:
     #             sentence = sentence.split("*/")[1:]
     #             in_a_comment = False
+
+    def parseTernary(sentence : str):
+        pass
+
+    # js objects
+    # NOTE: i think i will let cyk handle objects and list
+    def parseObject(sentence : str):
+        pass
+
     def removeComment(sentence : str):
         sentence = re.sub(r'(?:\/\*(?:[^\*]|\**[^\*\/])*\*+\/)|(?:\/\/[\S ]*)', ' ', sentence)
         
@@ -41,7 +50,7 @@ def parseText(text: list[str]) -> tuple[list[str], list[Literal]]:
                 
 
     def parseStaticString(sentence: str) -> str:
-        formula = r'(?:\'(?:[^\*]|\**[^\*\/])*\')|(?:\"(?:[^\*]|\**[^\*\/])*\")|(?:\`(?:[^\*]|\**[^\*\/])*\`)'
+        formula = r'\'(?:[^\'\\]|\\.)*\'|\"(?:[^\"\\]|\\.)*\"|\`(?:[^\`\\]|\\.)*\`'
         found_string = re.findall(formula, sentence)
         sentence = re.sub(formula, " str_val ", sentence)
         # NOTE: unstable regex formula
@@ -73,28 +82,35 @@ def parseText(text: list[str]) -> tuple[list[str], list[Literal]]:
 
         for i in every_ops :
             sentence = sentence.replace(every_ops[i], " " + i + " ")
+        
 
         return sentence
     
+    def parseLineTermination(sentence : str) -> str:
+        for i in line_termination:
+            sentence = sentence.replace(line_termination[i], " " + i + " ")
 
-    
+        return sentence
     # parseVariable should always be the last method called
     def parseVariable(sentence: str) -> str:
         sentence = sanitizeString(sentence) # TODO: sanitization should actually be put last
                                             # but here, we actually needed it befor split()
         
         literal : Literal = sentence.split(' ')        
-
+        
         for i in range(len(literal)):
-            if (not isTerminal(literal[i]) and literal[i] != '' and literal[i] != "str_val"):
+            if (not isTerminal(literal[i]) and literal[i] != '' and (literal[i] != "str_val" or not debug_mode)):
                 if literal[i] not in variable_pool:
                     variable_pool.append(literal[i])
                 
                 # TODO: numeric constant will still be marked as vairable
-                literal[i] = "variable_" + str(variable_pool.index(literal[i]))
+                if debug_mode:
+                    literal[i] = "variable_" + str(variable_pool.index(literal[i]))
+                else :
+                    literal[i] = 'ID'
         
 
         return ' '.join(literal)
 
     # TODO: nullish and ternary operator will scuff the result, need to handle it later
-    return [parseVariable(parseKeywords(parseBrackets(parseOperators(parseStaticString(removeComment((" " + i + " "))))))) for i in text], variable_pool
+    return [parseVariable(parseKeywords(parseBrackets(parseLineTermination(parseOperators(parseStaticString(removeComment((" " + i + " ")))))))) for i in text], variable_pool

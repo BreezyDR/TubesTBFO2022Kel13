@@ -19,6 +19,7 @@ nullish_ops = terminal["nullish_operator"]
 assign_ops  = terminal["assign_operator"]
 comparison_ops = terminal["comparison_operator"]
 bitwise_ops = terminal["bitwise_operator"]
+line_termination = terminal["line_termination"]
 
 CFG_GRAMMAR = {}
 
