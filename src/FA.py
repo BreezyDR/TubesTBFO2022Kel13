@@ -2,13 +2,76 @@
 
 arith_ops = ['+', '-', '*', '**', '/', '%', '++', '--']
 logic_ops = ['&&', '||', '!']
-ternary_ops = ["ternary_operator"]
 nullish_ops = ['??']
 assign_ops = ['=', '+=', '-=', '*=', '/=', '%=', ':']
 comparison_ops = ['==', '===', '!=', '!==', '>', '<', '>=', '<=']
 bitwise_ops = ['&', '|', '~', '^', '<<', '>>', '>>>']
 
+def checkVarOps(array_of_words: list[str]) -> bool:
+    # KAMUS LOKAL
+    valid: bool
+    firstVar: bool
+    op: bool
+    icdcop: bool
+    i: int
+    length: int    
+
+    # ALGORITMA
+    valid = True
+    firstVar = True
+    op = False
+    icdcop = False
+    i = 0
+    length = len(array_of_words)-1
+
+    while (i < length and valid):
+        if (isAssignOps(array_of_words, i)):
+            firstVar = False
+            if (op == True):
+                valid = False
+            else:
+                i = i + 2
+        elif (isArithOps(array_of_words, i) or isStringOps(array_of_words, i) or isBitOps(array_of_words, i)):
+            firstVar = False
+            op = True
+            if (array_of_words[i] == '++' or  array_of_words[i] == '--' or array_of_words[i+1] == '++' or  array_of_words[i+1] == '--'):
+                icdcop = True
+            i = i + 2
+        elif (isVariable(array_of_words[i]) and icdcop):
+            valid = False
+        elif (isCompareOps(array_of_words, i, icdcop) or isLogicOps(array_of_words, i)):
+            op = True
+            if (icdcop):
+                i = i + 1
+            else:
+                i = i + 2
+        elif (array_of_words[i+1] == ':'):
+            if (not (isConditionalOps(array_of_words, i+1))):
+                valid = False
+            else:
+                op = True
+                i = i + 3
+        elif ((isVariable(array_of_words[i]) or array_of_words[i].isdigit()) and (firstVar or op) and not icdcop):
+            op = False
+            i = i + 1
+        elif (isVariable(array_of_words[i]) and not firstVar and not op):
+            valid = False
+        elif (array_of_words[i] == ';'):
+            firstVar = True
+            op = False
+            icdcop = False
+            i = i + 1
+        else:
+            valid = False
+
+    return valid
+
 def isVariable(word: str) -> bool:
+    # KAMUS LOKAL
+    isVar: bool
+    i: int
+
+    # ALGORITMA
     isVar = True
     i = 1
 
@@ -101,7 +164,7 @@ def isAssignOps(array_of_words: list[str], i : int) -> bool:
         if (ops in assign_ops):
             arg2 = array_of_words[i+2]
             if (ops == '='):
-                if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2) or isArray(arg2))):
+                if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2) or isArray(arg2) or isNull(arg2))):
                     isValid = False
             elif (isVariable(arg2) or arg2.isdigit()):
                 isValid = True
@@ -114,7 +177,7 @@ def isAssignOps(array_of_words: list[str], i : int) -> bool:
 
     return isValid
 
-def isCompareOps(array_of_words: list[str], i : int) -> bool:
+def isCompareOps(array_of_words: list[str], i : int, prev_inc_dec: bool) -> bool:
     # KAMUS LOKAL
     isValid: bool
     arg1: str
@@ -131,6 +194,11 @@ def isCompareOps(array_of_words: list[str], i : int) -> bool:
             arg2 = array_of_words[i+2]
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
                 isValid = False
+    elif (prev_inc_dec):
+        if (arg1 in comparison_ops):
+            arg2 = array_of_words[i+1]
+            if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
+                isValid = False            
         else:
             isValid = False
     else:
@@ -156,6 +224,9 @@ def isLogicOps(array_of_words: list[str], i : int) -> bool:
             if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
                 isValid = False
         else:
+            isValid = False
+    elif (arg1 == '!'):
+        if (not (isVariable(ops) or ops.isdigit() or isString(ops))):
             isValid = False
     else:
         isValid = False
@@ -191,22 +262,30 @@ def isConditionalOps(array_of_words: list[str], i : int) -> bool:
 
     return isValid
 
-def isTypeOps(array_of_words: list[str], i : int) -> bool:
+def isBitOps(array_of_words: list[str], i : int) -> bool:
     # KAMUS LOKAL
     isValid: bool
+    arg1: str
     ops: str
-    arg: str
+    arg2: str
     
     # ALGORITMA
     isValid = True
-    ops = array_of_words[i]
-    arg = array_of_words[i+1]
+    arg1 = array_of_words[i]
+    ops = array_of_words[i+1] 
 
-    if (ops == 'typeof'):
-        if (arg == ';'):
+    if (isVariable(arg1) or arg1.isdigit() or isString(arg1)):
+        if (ops in bitwise_ops):
+            arg2 = array_of_words[i+2]
+            if (not (isVariable(arg2) or arg2.isdigit() or isString(arg2))):
+                isValid = False
+        else:
+            isValid = False
+    elif (arg1 == '~'):
+        if (not (isVariable(ops) or ops.isdigit() or isString(ops))):
             isValid = False
     else:
-        isValid = False
+        isValid = False 
 
     return isValid
 
@@ -219,5 +298,8 @@ def isBoolean(arg: str) -> bool:
 def isArray(arg: str) -> bool:
     return (arg[0] == '[' and arg[len(arg)-1] == ']')
 
-var_pool = ["a", "+=", '"wow"', "==", "2"]
-print(isStringOps(var_pool, 0))
+def isNull(arg: str) -> bool:
+    return (arg == 'null')
+
+var_pool = ['++', '==', 'a', '++', ';', 'a', ';']
+print(checkVarOps(var_pool))
